@@ -9,6 +9,8 @@
     using CarDealer.Data;
     using CarDealer.Data.Models;
     using CarDealer.Web.Infrastructure.Extensions;
+    using CarDealer.Services;
+    using CarDealer.Services.Implementations;
 
     public class Startup
     {
@@ -24,7 +26,13 @@
             services.AddDbContext<CarDealerDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>(options => 
+            {
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = false;
+            })
                 .AddEntityFrameworkStores<CarDealerDbContext>()
                 .AddDefaultTokenProviders();
 

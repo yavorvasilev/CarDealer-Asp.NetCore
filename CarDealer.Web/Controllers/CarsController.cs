@@ -6,6 +6,7 @@
     using System.Linq;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using System.Collections.Generic;
+    using Microsoft.AspNetCore.Authorization;
 
     [Route("cars")]
     public class CarsController : Controller
@@ -19,6 +20,7 @@
 			this.parts = parts;
 		}
 
+		[Authorize]
 		[Route(nameof(Create))]
 		public IActionResult Create()
 			=> View(new CarFormModel
@@ -26,6 +28,7 @@
 				AllParts = GetPartsSelectItems()
 			});
 
+		[Authorize]
 		[HttpPost]
 		[Route(nameof(Create))]
 		public IActionResult Create(CarFormModel carModel) 
